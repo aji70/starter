@@ -133,6 +133,12 @@ btnLogin.addEventListener('click', function(e){
   
 })
 
+const displayIncomeSummary = function(bal){
+  const bal = income.filter(bal => bal > 0).reduce((acc, c) => acc + c);
+  labelSumIn.textContent = bal
+}
+
+displayIncomeSummary(account1.movements)
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -279,4 +285,4 @@ btnLogin.addEventListener('click', function(e){
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 const totalDepositInUSd = movements.filter(mov => mov > 0).map(mov => mov * 1.1).reduce((acc,c) => acc + c)
-  console.log(totalDepositInUSd)
+  console.log(totalDepositInUSd);
