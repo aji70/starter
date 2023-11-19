@@ -87,6 +87,12 @@ const calcPrintBalance = function(bal){
 // labelBalance.innerHTML = 
 calcPrintBalance(account1.movements)
 
+const displayIncomeSummary = function(bal){
+  const bal = income.filter(bal => bal > 0).reduce((acc, c) => acc + c);
+  labelSumIn.textContent = bal
+}
+
+displayIncomeSummary(account1.movements)
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
