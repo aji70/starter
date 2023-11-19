@@ -172,7 +172,7 @@ calcPrintBalance(account1.movements)
 //   console.log(`${key}: ${value}`)
 // })
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
 
 // const euroToUSD = 1.1;
 
@@ -206,33 +206,44 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //     })
 // console.log(max)
 
-const agess = [5, 2, 4, 1, 15, 8, 3];
-const ages1 = [16, 6, 10, 5, 6, 1, 4];
+// const agess = [5, 2, 4, 1, 15, 8, 3];
+// const ages1 = [16, 6, 10, 5, 6, 1, 4];
 
 
-const calculateAverageAge = function(ages){const humanAge = ages.map(function(curr){
-  if(curr <= 2){
-    const humanage = curr * 2   
-    return humanage 
-  }
-  else{
-   const humanage = 16 + curr * 4
+// const calculateAverageAge = function(ages){const humanAge = ages.map(function(curr){
+//   if(curr <= 2){
+//     const humanage = curr * 2   
+//     return humanage 
+//   }
+//   else{
+//    const humanage = 16 + curr * 4
    
-    return humanage
-  }
-})
-const x = function(c){
-  if(c > 18) return c;
-}
-const updated = humanAge.filter(x);
-console.log(updated)
+//     return humanage
+//   }
+// })
+// const x = function(c){
+//   if(c > 18) return c;
+// }
+// const updated = humanAge.filter(x);
+// console.log(updated)
 
-const sum  = updated.reduce(function(acc, c){
-  return (acc + c);
-}, 0)
-const average = sum / updated.length;
+// const sum  = updated.reduce(function(acc, c){
+//   return (acc + c);
+// }, 0)
+// const average = sum / updated.length;
 
-return average;
-}
-console.log(calculateAverageAge(agess))
-console.log(calculateAverageAge(ages1))
+// return average;
+// }
+// console.log(calculateAverageAge(agess))
+// console.log(calculateAverageAge(ages1))
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const totalDepositInUSd = movements.filter(function(mov){
+  return mov > 0}).map(function(mov){
+    return mov * 1.1
+  }).reduce(function(acc,c){
+    return acc + c;
+  })
+
+  console.log(totalDepositInUSd)
