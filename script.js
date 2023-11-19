@@ -239,11 +239,5 @@ calcPrintBalance(account1.movements)
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-const totalDepositInUSd = movements.filter(function(mov){
-  return mov > 0}).map(function(mov){
-    return mov * 1.1
-  }).reduce(function(acc,c){
-    return acc + c;
-  })
-
+const totalDepositInUSd = movements.filter(mov => mov > 0).map(mov => mov * 1.1).reduce((acc,c) => acc + c)
   console.log(totalDepositInUSd)
