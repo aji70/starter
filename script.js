@@ -77,7 +77,15 @@ const displayMovements = function(movement){
   
 }
 
-displayMovements(account1.movements)
+const createUser = function(accs){
+  accs.forEach(function(acc){
+    acc.username = acc.owner.toLowerCase().split(' ').map(name =>name[0]).join('');
+  })
+}
+
+createUser(accounts)
+
+
 const calcPrintBalance = function(bal){
   const balance = bal.reduce( (acc, c) => acc + c)
   // return balance
@@ -85,7 +93,45 @@ const calcPrintBalance = function(bal){
 }
 
 // labelBalance.innerHTML = 
-calcPrintBalance(account1.movements)
+const displayIncomeSummary = function(income){
+  const bal = income.movements.filter(bal => bal > 0).reduce((acc, c) => acc + c);
+  console.log(bal)
+  labelSumIn.textContent = `${bal}EUR`
+
+  const bal1 = income.movements.filter(bal => bal < 0).reduce((acc, c) => acc + c);
+  console.log(bal)
+  labelSumOut.textContent = `${Math.abs(bal1)}EUR`
+
+  const intrest = income.movements.filter(bal => bal > 0).map(val => val * income.interestRate/100).filter(ba => ba >= 1 ).reduce((acc, c) => acc + c);
+  console.log(intrest)
+  labelSumInterest.textContent = `${intrest}EUR`
+
+  
+
+}
+
+
+
+
+let currentAccount;
+btnLogin.addEventListener('click', function(e){
+  e.preventDefault();
+  currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value)
+
+  if(currentAccount?.pin === Number(inputLoginPin.value)){
+    labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`
+    containerApp.style.opacity = 100; 
+    calcPrintBalance(currentAccount.movements)
+    displayMovements(currentAccount.movements)
+    displayIncomeSummary(currentAccount) 
+    inputLoginPin.value = inputLoginUsername.value = ''
+    inputLoginPin.blur();
+  }else{
+    console.log('Incorrect pin')
+  }
+
+  
+})
 
 
 /////////////////////////////////////////////////
@@ -183,13 +229,6 @@ calcPrintBalance(account1.movements)
 // const displayMOvements =movements.map((movement, i) => `${i + 1}: you ${movement < 0? 'withdrew' : 'deposited'} $${Math.abs(movement)}`)
 
 
-// const createUser = function(accs){
-//   accs.forEach(function(acc){
-//     acc.username = acc.owner.toLowerCase().split(' ').map(name =>name[0]).join('');
-//   })
-// }
-
-// createUser(accounts)
 // console.log(movements)
 // const deposit = movements.filter(move => move > 0)
 // console.log(deposit)
