@@ -87,6 +87,7 @@ const createUser = function(accs){
 createUser(accounts)
 
 
+
 const calcPrintBalance = function(bal){
   bal.balance = bal.movements.reduce( (acc, c) => acc + c)
   labelBalance.textContent = `${bal.balance}EUR`
@@ -328,3 +329,5 @@ btnSort.addEventListener('click', function(e){
 //   const sortedMovements = movements.sort((a, b) => a - b)
 
 //   console.log(sortedMovements)
+const z = Array.from({length: 7}, (_, i) => i + 1);
+console.log(z)
