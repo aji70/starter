@@ -330,4 +330,4 @@ btnSort.addEventListener('click', function(e){
 
 //   console.log(sortedMovements)
 const z = Array.from({length: 7}, (_, i) => i + 1);
-console.log(z)
+console.log(z);
