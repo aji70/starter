@@ -61,9 +61,10 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function(movement){
+const displayMovements = function(movement, sort = false){
   containerMovements.innerHTML = '';
-  movement.forEach(function(mov, i){
+  const movs = sort ? movement.slice().sort((a, b) => a - b) : movement
+  movs.forEach(function(mov, i){
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
@@ -87,23 +88,27 @@ createUser(accounts)
 
 
 const calcPrintBalance = function(bal){
-  const balance = bal.reduce( (acc, c) => acc + c)
-  // return balance
-  labelBalance.textContent = `${balance}EUR`
+  bal.balance = bal.movements.reduce( (acc, c) => acc + c)
+  labelBalance.textContent = `${bal.balance}EUR`
+}
+const update = function(ca){
+  calcPrintBalance(ca)
+  displayMovements(ca.movements)
+  displayIncomeSummary(ca) 
 }
 
 // labelBalance.innerHTML = 
 const displayIncomeSummary = function(income){
   const bal = income.movements.filter(bal => bal > 0).reduce((acc, c) => acc + c);
-  console.log(bal)
+  
   labelSumIn.textContent = `${bal}EUR`
 
   const bal1 = income.movements.filter(bal => bal < 0).reduce((acc, c) => acc + c);
-  console.log(bal)
+  
   labelSumOut.textContent = `${Math.abs(bal1)}EUR`
 
   const intrest = income.movements.filter(bal => bal > 0).map(val => val * income.interestRate/100).filter(ba => ba >= 1 ).reduce((acc, c) => acc + c);
-  console.log(intrest)
+  
   labelSumInterest.textContent = `${intrest}EUR`
 
   
@@ -121,9 +126,7 @@ btnLogin.addEventListener('click', function(e){
   if(currentAccount?.pin === Number(inputLoginPin.value)){
     labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`
     containerApp.style.opacity = 100; 
-    calcPrintBalance(currentAccount.movements)
-    displayMovements(currentAccount.movements)
-    displayIncomeSummary(currentAccount) 
+    update(currentAccount);
     inputLoginPin.value = inputLoginUsername.value = ''
     inputLoginPin.blur();
   }else{
@@ -133,13 +136,49 @@ btnLogin.addEventListener('click', function(e){
   
 })
 
-const displayIncomeSummary = function(bal){
-  const bal = income.filter(bal => bal > 0).reduce((acc, c) => acc + c);
-  labelSumIn.textContent = bal
-}
+btnTransfer.addEventListener('click', function(e){
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiver = accounts.find(acc => acc.username === (inputTransferTo.value));
 
-displayIncomeSummary(account1.movements)
+  if(amount > 0 && receiver && currentAccount.balance >= amount && receiver?.username !== currentAccount.username){
+    currentAccount.movements.push(-amount);
+    receiver.movements.push(amount);
+    update(currentAccount);
+    
 
+  }
+  inputTransferAmount.value = inputTransferTo.value = '';
+})
+
+btnLoan.addEventListener('click', function(e){
+  e.preventDefault();
+  const amount = Number(inputLoanAmount.value)
+  if(amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)){
+    currentAccount.movements.push(amount);
+    inputLoanAmount.value = '';
+    update(currentAccount);
+  }
+})
+const overAllBalance = accounts.flatMap(acc => acc.movements).reduce((acc, mov) => acc + mov, 0)
+console.log(overAllBalance)
+
+btnClose.addEventListener('click', function(e){
+  e.preventDefault();
+  if(inputCloseUsername.value === currentAccount.username && Number(inputClosePin.value) === currentAccount.pin){
+    const index = accounts.findIndex( acc => (acc.username === currentAccount.username))
+    accounts.splice(index, 1);
+    containerApp.style.opacity = 0
+  }
+  inputClosePin.value = inputCloseUsername.value = '';
+})
+let sorted = false
+btnSort.addEventListener('click', function(e){
+  e.preventDefault()
+  displayMovements(currentAccount.movements, !sorted)
+    sorted = !sorted
+  
+})
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -282,7 +321,10 @@ displayIncomeSummary(account1.movements)
 // console.log(calculateAverageAge(agess))
 // console.log(calculateAverageAge(ages1))
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-const totalDepositInUSd = movements.filter(mov => mov > 0).map(mov => mov * 1.1).reduce((acc,c) => acc + c)
-  console.log(totalDepositInUSd);
+// const totalDepositInUSd = movements.filter(mov => mov > 0).map(mov => mov * 1.1).reduce((acc,c) => acc + c)
+//   console.log(totalDepositInUSd);
+//   const sortedMovements = movements.sort((a, b) => a - b)
+
+//   console.log(sortedMovements)
