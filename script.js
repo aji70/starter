@@ -331,3 +331,9 @@ btnSort.addEventListener('click', function(e){
 //   console.log(sortedMovements)
 // const z = Array.from({length: 7}, (_, i) => i + 1);
 // console.log(z);
+
+// const sumOfBal = accounts.flatMap(c => c.movements).filter(cur => cur > 0).reduce((acc, c) => acc + c ,0)
+// console.log(sumOfBal)
+
+const deposit1000 = accounts.flatMap(cur => cur.movements).filter(cur => cur >= 1000)
+console.log(deposit1000)
