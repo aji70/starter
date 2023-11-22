@@ -162,7 +162,7 @@ btnLoan.addEventListener('click', function(e){
   }
 })
 const overAllBalance = accounts.flatMap(acc => acc.movements).reduce((acc, mov) => acc + mov, 0)
-console.log(overAllBalance)
+// console.log(overAllBalance)
 
 btnClose.addEventListener('click', function(e){
   e.preventDefault();
@@ -335,5 +335,85 @@ btnSort.addEventListener('click', function(e){
 // const sumOfBal = accounts.flatMap(c => c.movements).filter(cur => cur > 0).reduce((acc, c) => acc + c ,0)
 // console.log(sumOfBal)
 
-const deposit1000 = accounts.flatMap(cur => cur.movements).filter(cur => cur >= 1000)
-console.log(deposit1000)
+// const deposit1000 = accounts.flatMap(cur => cur.movements).filter(cur => cur >= 1000).length
+
+// USING REDUCE TO GET LENGTH OF AN ARRAY
+// const deposit1000 = accounts.flatMap(c => c.movements).reduce((count, crr) => crr >=1000 ? count + 1 : count, 0)
+// console.log(deposit1000)
+// const deposit1000 = accounts.flatMap(c => c.movements).reduce((count, crr) => crr >=1000 ? ++count : count, 0)
+// console.log(deposit1000)
+
+// USING THE REDUCE METHOD TO CREATE AN OBJECT CONTAINING MULTIPLE SUMS
+// const sums = accounts.flatMap( cur => cur.movements).reduce((acc,cur) =>{
+//   // cur > 0? acc.deposit += cur : acc.withdrawal += cur
+//   acc[cur > 0? 'deposit' : 'withdrawal'] += cur;
+//   return (acc);
+// },{deposit:0, withdrawal: 0})
+
+// console.log(sums.deposit, Math.abs(sums.withdrawal))
+// // CONVERT TO TITLE CASE
+// const titleCase = function(title){
+//   const exception = ['a', 'an', 'and', 'the', 'but', 'or', 'on', 'in', 'with']
+//   const capitalize = str => str[0].toUpperCase() + str.slice(1);
+
+//   const titlee = title.toLowerCase().split(' ').map(word => (exception.includes(word)? word : capitalize(word))).join(' ');
+//   return capitalize(titlee);
+// }
+
+// console.log(titleCase('this is a long title'))
+// console.log(titleCase('this is a long tITle BUt nOt too long'))
+// console.log(titleCase('and here is another title with an EXAMPLE'))
+
+// CODING CHALLANGE
+const dogs = [
+  {weight: 22, curFood: 250, owners:['Alice', 'Bob']},
+  {weight: 8, curFood: 200, owners:['Matilda']},
+  {weight: 13, curFood: 275, owners:['Sarah', 'John']},
+  {weight: 32, curFood: 340, owners:['Michael']},
+]
+// 1
+
+// const dog1 = {weight: 22, curFood: 250, owners:['Alice', 'Bob']}
+// const dog2 = {weight: 8, curFood: 200, owners:['Matilda']}
+// const dog3 = {weight: 13, curFood: 275, owners:['Sarah', 'John']}
+// const dog4 = {weight: 32, curFood: 340, owners:['Michael']}
+
+// const dog = [dog1, dog2, dog3, dog4]
+// const recFood = (doggy) => {
+//    doggy.slice(0).map(e => {
+//     e.recommendedFood = Math.ceil(e.weight  ** 0.75 * 28);  
+//   })
+// }
+// recFood(dog)
+
+// // 2
+// const sarahdog = function(doggy, oname){
+//   doggy.slice(0).find(e => {
+//    if (e.owners.includes(oname)){ 
+//    if (e.curFood > (e.recommendedFood * 0.90) && e.curFood < e.recommendedFood * 1.10) 
+//    { console.log("Eating Well")} else {console.log('Not eating well')}
+//   };    
+//   })
+// }
+// sarahdog(dog, "Sarah")
+// //3
+// let eatWell;
+// let notEatWell;
+// const eating = function(doggy){
+//   doggy.slice(0).map( function(e){
+//     const a = e.owners[0]
+//     if (sarahdog(doggy, a) === "Eating Well") {
+//       eatWell.push(e);
+//     }
+//     if (sarahdog(doggy, a) === 'Not eating well') {
+//       notEatWell.push(e);
+//     }
+//   })
+//   console.log(eatWell)
+//   console.log(notEatWell)
+// }
+// eating(dog)
+
+
+// // console.log()
+// console.log(dog)
