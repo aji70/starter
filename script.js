@@ -415,5 +415,6 @@ const dogs = [
 // eating(dog)
 
 
+
 // // console.log()
 // console.log(dog)
